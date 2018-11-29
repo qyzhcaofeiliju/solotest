@@ -53,5 +53,6 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
       stage('Testing'){
           echo "Testing..."
       }
+   }
 }
 
