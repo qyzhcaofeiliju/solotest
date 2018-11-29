@@ -35,13 +35,12 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
         echo "3.Build Docker Image Stage"
         sh "docker build -t 192.168.1.252/qyzh-v1/solo:${build_tag} -f deploy/Dockerfile ."
      }
-      stage('Push') {
-        echo "4.Push Docker Image Stage"
-        withCredentials([usernamePassword(credentialsId: 'harbor', passwordVariable: 'harborPassword', usernameVariable: 'harborUser')]) {
-            sh "docker login -u ${harborUser} -p ${harborPassword}"
-            sh "docker push 192.168.1.252/qyzh-v1/solo:${build_tag}"
-         }
-      }
+       stage('Push Image'){
+          sh '''
+          docker login -u admin -p YWRtaW46cXl6aEAhMTIzNDU2 192.168.1.252
+          docker push 192.168.1.252/qyzh-v1/solo:${build_tag}
+          '''
+       }
        stage('Deploy') {
         echo "5. Deploy Stage"
         if (env.BRANCH_NAME == 'master') {
@@ -54,6 +53,5 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
       stage('Testing'){
           echo "Testing..."
       }
-  }
 }
 
