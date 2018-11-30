@@ -2,15 +2,16 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
     containerTemplate(
         name: 'jnlp', 
         image: '192.168.1.252/qyzh-v1/jenkins-slave', 
+        workingDir: '/home/jenkins',
         alwaysPullImage: true 
     ),
   ],
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
     hostPathVolume(mountPath: '/usr/bin/docker', hostPath: '/usr/bin/docker'),
+    hostPathVolume(mountPath: '/root/.kube', hostPath: '/home/jenkins/.kube'),
     hostPathVolume(mountPath: '/usr/local/jdk', hostPath: '/usr/local/jdk'),
     hostPathVolume(mountPath: '/usr/local/maven', hostPath: '/usr/local/maven'),
-    hostPathVolume(mountPath: '/root/.kube', hostPath: '/home/jenkins/.kube'),
   ],
   imagePullSecrets: ['registry-pull-secret'],
 ) 
