@@ -19,7 +19,7 @@ spec:
       - name: registry-pull-secret
       containers:
       - name: solo
-        image: 192.168.1.252/qyzh-v1/solo:<BUILD_TAG>
+        image: qyzhcaofei/solo:<BUILD_TAG>
         imagePullPolicy: Always
         env:
         - name: branch
