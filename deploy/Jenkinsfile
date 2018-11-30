@@ -27,13 +27,14 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
          }
       }
       stage('Unit Testing'){
-      	echo "Unit Testing..."
+      	echo "2.Unit Testing..."
       }
       stage('Maven Build'){
+        echo "3.Maven Build"
           sh "mvn clean package -Dmaven.test.skip=true"
       }
-      stage('Build') {
-        echo "3.Build Docker Image Stage"
+      stage('Build Image') {
+        echo "4.Build Docker Image Stage"
         sh "docker build -t qyzhcaofei/solo:${build_tag} -f deploy/Dockerfile ."
      }
       stage('Push') {
@@ -48,9 +49,9 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
         if (env.BRANCH_NAME == 'master') {
             input "确认要部署线上环境吗？"
         }
-        sh "sed -i 's/<BUILD_TAG>/${build_tag}/' -f deploy/deploy.yaml"
-        sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' -f deploy/deploy.yaml"
-        sh "kubectl apply -f deploy/deploy.yaml --record"
+        sh "sed -i 's/<BUILD_TAG>/${build_tag}/' deploy.yaml"
+        sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' deploy.yaml"
+        sh "kubectl apply -f deploy.yaml --record"
     }
       stage('Testing'){
           echo "Testing..."
