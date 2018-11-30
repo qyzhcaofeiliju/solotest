@@ -1,7 +1,7 @@
-apiVersion: extensions/v1beta1 
+apiVersion: apps/v1beta2 
 kind: Deployment
 metadata:
-  name: solo
+  name: blog-solo
   namespace: blog
 spec:
   replicas: 3
@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         project: blog
-        app: solo
+        app: solo	
     spec:
       imagePullSecrets:
       - name: registry-pull-secret
@@ -23,7 +23,7 @@ spec:
         imagePullPolicy: Always
         env:
         - name: branch
-          value: <BRANCH_NAME> 
+          value: <BRANCH_NAME>
         ports:
         - containerPort: 8080
           name: web
