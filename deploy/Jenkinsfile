@@ -10,6 +10,7 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
     hostPathVolume(mountPath: '/usr/bin/docker', hostPath: '/usr/bin/docker'),
     hostPathVolume(mountPath: '/usr/local/jdk', hostPath: '/usr/local/jdk'),
     hostPathVolume(mountPath: '/usr/local/maven', hostPath: '/usr/local/maven'),
+    hostPathVolume(mountPath: '/root/.kube', hostPath: '/home/jenkins/.kube'),
   ],
   imagePullSecrets: ['registry-pull-secret'],
 ) 
@@ -49,7 +50,7 @@ podTemplate(label: 'jnlp-slave', cloud: 'kubernetes', containers: [
         }
         sh "sed -i 's/<BUILD_TAG>/${build_tag}/' -f deploy/deploy.yaml"
         sh "sed -i 's/<BRANCH_NAME>/${env.BRANCH_NAME}/' -f deploy/deploy.yaml"
-        sh "kubectl apply -f deploy.yaml --record"
+        sh "kubectl apply -f deploy/deploy.yaml --record"
     }
       stage('Testing'){
           echo "Testing..."
