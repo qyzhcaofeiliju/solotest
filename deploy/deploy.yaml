@@ -2,7 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: blog-solo
-  namespace: blog
+  namespace: default
 spec:
   replicas: 3
   selector:
@@ -61,7 +61,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: blog-solo
-  namespace: blog
+  namespace: default
 
 ---
 
@@ -69,7 +69,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
   name: blog-solo
-  namespace: blog
+  namespace: default
 rules:
   - apiGroups: ["extensions", "apps"]
     resources: ["deployments"]
@@ -95,7 +95,7 @@ apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
   name: blog-solo
-  namespace: blog
+  namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -103,14 +103,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: blog-solo
-    namespace: blog
+    namespace: default
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: blog-solo
-  namespace: blog
+  namespace: default
   labels:
     project: blog
     app: solo
