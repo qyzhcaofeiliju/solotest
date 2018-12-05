@@ -54,11 +54,6 @@ spec:
       - name: jdk
         hostPath:
           path: /usr/local/jdk
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: blog-solo
-  namespace: blog
  
  ---
   
